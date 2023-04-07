@@ -2,6 +2,7 @@ package com.example.binarysearchtree;
 
 import com.example.ElementNotFoundException;
 import com.example.Tree;
+import com.example.binarytree.BinaryTree;
 
 import java.util.*;
 
@@ -176,7 +177,11 @@ public class BinarySearchTree<T extends Comparable> implements Tree<T> {
     }
 
     private void preOrder(BinaryTreeNode<T> node, Queue<T> tempList) {
-        // TODO implement pre order iterator
+        if(node != null){
+            tempList.add(node.getElement()); //Visiting the node
+            preOrder(node.getLeft(), tempList); //Left
+            preOrder(node.getRight(), tempList); //Right
+        }
     }
 
     public Iterator<T> iteratorInOrder() {
@@ -188,7 +193,11 @@ public class BinarySearchTree<T extends Comparable> implements Tree<T> {
     }
 
     private void inOrder(BinaryTreeNode<T> node, Queue<T> tempList) {
-        // TODO implement in order iterator
+        if(node != null){
+            inOrder(node.getLeft(), tempList); //Left
+            tempList.add(node.getElement()); //Visiting the node
+            inOrder(node.getRight(), tempList); //Right
+        }
     }
 
     public Iterator<T> iteratorPostOrder() {
@@ -200,7 +209,11 @@ public class BinarySearchTree<T extends Comparable> implements Tree<T> {
     }
 
     private void postOrder(BinaryTreeNode<T> node, Queue<T> tempList) {
-        // TODO implement post order iterator
+        if(node != null){
+            postOrder(node.getLeft(), tempList); //Left
+            postOrder(node.getRight(), tempList); //Right
+            tempList.add(node.getElement()); //Visiting the node
+        }
     }
 
     public Iterator<T> iteratorLevelOrder() {
@@ -213,7 +226,22 @@ public class BinarySearchTree<T extends Comparable> implements Tree<T> {
 
     private void levelOrder(BinaryTreeNode<T> node, Queue<T> tempList) {
 
-        // TODO implement level order iterator
+        Queue<BinaryTreeNode<T>> queue = new LinkedList<>();
+        queue.add(node);
+
+        while(!queue.isEmpty()){
+            BinaryTreeNode<T> tempNode = queue.poll();
+            tempList.add(tempNode.element); //visiting the node
+
+            if(tempNode.left != null){
+                queue.add(tempNode.left);
+            }
+
+            if(tempNode.right != null){
+                queue.add(tempNode.right);
+            }
+
+        }
 
     }
 
